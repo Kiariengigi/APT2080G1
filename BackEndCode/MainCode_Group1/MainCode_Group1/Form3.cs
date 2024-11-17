@@ -53,7 +53,7 @@ namespace MainCode_Group1
             {
                 if (string.IsNullOrEmpty(Temp_Read[0].Text))
                 {
-                    MessageBox.Show("Null Readings");
+                    MessageBox.Show("No entered data", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -90,7 +90,7 @@ namespace MainCode_Group1
 
                             double.TryParse(Temp_Read[i].Text, out reading);
 
-                            MessageBox.Show($"{reading}");
+                            
 
                             if (reading > Temp[i, 0] || reading < Temp[i, 1])
                             {
@@ -109,7 +109,7 @@ namespace MainCode_Group1
 
                             double.TryParse(Moisture_Read[i].Text, out reading);
 
-                            MessageBox.Show($"{reading}");
+                          
 
                             if (reading > Moist[i, 0] || reading < Moist[i, 1])
                             {

@@ -83,9 +83,12 @@ namespace MainCode_Group1
 
         private void Next_Btn_Click(object sender, EventArgs e)
         {
-             
-            if (stage == 1)
-            {
+
+
+            Sugarcane_Check.Checked = false;
+            Maize_Check.Checked = false;
+            Tea_Check.Checked = false; 
+            tomato_check.Checked = false;
                 int Sugarcane = 0;
                 int Maize = 0;
                 int Tea = 0;
@@ -94,9 +97,14 @@ namespace MainCode_Group1
                 if (Maize_Check.Checked) { Maize = 2; };
                 if (Tea_Check.Checked) { Tea = 4; };
                 if (tomato_check.Checked) { Tomato = 8; };
+                string defaultUsername = "rd";
+                if (string.IsNullOrEmpty(Username)) // Check if Username is null or empty
+                {
+                    Username = defaultUsername; // Assign the default value
+                }
 
-                
-                    string query1 = "UPDATE Users SET Plants = @Plants WHERE Username = @Username";
+
+                string query1 = "UPDATE Users SET Plants = @Plants WHERE Username = @Username";
 
                     using (OleDbCommand command = new OleDbCommand(query1, connection))
                     {
@@ -106,14 +114,17 @@ namespace MainCode_Group1
                         command.ExecuteNonQuery();
                         
                     }
-                stage = 2; 
-                
-            }
-            else if (stage == 2)
+
+               
+                stage++;
+
+
+            
+            if (stage == 2)
             {
-                int Maize = 0;
-                int Tea = 0;
-                int Tomato = 0;
+                int Maize1 = 0;
+                int Tea1 = 0;
+                int Tomato1 = 0;
 
                 tomato_check.Checked = false;
                 Maize_Check.Checked = false;
@@ -140,21 +151,28 @@ namespace MainCode_Group1
 
                 using (OleDbCommand command = new OleDbCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Sensors", Maize + Tea + Tomato);
+                    command.Parameters.AddWithValue("@Sensors", Maize1 + Tea1 + Tomato1);
                     command.Parameters.AddWithValue("@Username", Username);
 
                     command.ExecuteNonQuery();
 
                 }
-                stage = 3; 
+
+                
+
             }
             else
             {
                 Form3 f3 = new Form3();
+                this.Hide();
                 f3.StartPosition = FormStartPosition.CenterScreen;
                 f3.FormClosed += (s, args) => this.Close();
                 f3.Show();
             }
+            
+            
+                
+            
             
         }
     }

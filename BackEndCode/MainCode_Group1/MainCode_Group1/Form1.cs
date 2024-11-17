@@ -17,6 +17,7 @@ namespace MainCode_Group1
 {
     public partial class Form1 : Form
     { 
+        //Creating Connection
         private OleDbConnection connection;
         public Form1()
         {
@@ -25,6 +26,7 @@ namespace MainCode_Group1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //Initializing the Connection
             string dbPath = @"C:\Users\ngigi\OneDrive\Documents\Software_project\BackEndCode\MainCode_Group1";
             string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\ngigi\OneDrive\Documents\Software_project\BackEndCode\MainCode_Group1\MainCode_Group1\Database21Old.mdb";
 
@@ -36,6 +38,7 @@ namespace MainCode_Group1
 
         private void Sign_Up_btn_Click(object sender, EventArgs e)
         {
+            //Make sign up controls visible
             Sign_Up_btn.Visible = false;
             Sign_In_btn.Visible = false;
             Sign_In_btn1.Visible = this.Visible;
@@ -47,6 +50,7 @@ namespace MainCode_Group1
 
         private void Sign_In_btn_Click(object sender, EventArgs e)
         {
+            //Make Sign In controls visible
             Sign_Up_btn.Visible = false;
             Sign_In_btn.Visible = false;
             Sign_up_btn1.Location = new Point(100, 295);
@@ -66,6 +70,8 @@ namespace MainCode_Group1
 
         private void Sign_up_btn1_Click(object sender, EventArgs e)
         {
+            //Actual Sign Up button 
+            
             if (Confirm_Pass.Visible == false)
             {
                 Confirm_Pass.Visible = this.Visible;
@@ -78,7 +84,7 @@ namespace MainCode_Group1
             {
                 if (string.IsNullOrEmpty(Username.Text) || string.IsNullOrEmpty(Password.Text))
                 {
-                    MessageBox.Show("Please Enter a Username and Password");
+                    MessageBox.Show("Please Enter a Username and Password","No data Entered",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -109,7 +115,7 @@ namespace MainCode_Group1
 
                                 if (result > 0)
                                 {
-                                    MessageBox.Show("Welcome " + Username.Text);
+                                    MessageBox.Show("Welcome " + Username.Text,"Hi",MessageBoxButtons.OK,MessageBoxIcon.Information);
                                     this.Hide();
                                     Form2 f2 = new Form2();
                                     f2.passingvalue = Username.Text;    
@@ -120,7 +126,7 @@ namespace MainCode_Group1
                                 }
                                 else
                                 {
-                                    MessageBox.Show("There is already a user with those credentials");
+                                    MessageBox.Show("There is already a user with those credentials","Error",MessageBoxButtons.OK,MessageBoxIcon.Information);
                                 }
                             }
 
@@ -132,7 +138,7 @@ namespace MainCode_Group1
                     }
                     else
                     {
-                        MessageBox.Show("Passwords do not Match");
+                        MessageBox.Show("Passwords do not Match","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     }
                 }
 
@@ -153,6 +159,8 @@ namespace MainCode_Group1
                 Username.Location = new Point(113, 150);
                 Sign_up_btn1.Location = new Point(100, 305);
                 Sign_In_btn1.Location = new Point(100, 240);
+                Username.Text = null;
+                Password.Text = null;
 
             }
             else
@@ -160,7 +168,7 @@ namespace MainCode_Group1
                 //confirm pass is not visible
                 if (string.IsNullOrEmpty(Password.Text) || string.IsNullOrEmpty(Username.Text))
                 {
-                    MessageBox.Show("Please enter Username and Password");
+                    MessageBox.Show("Please Enter a Username and Password", "No data Entered", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
                 else
@@ -173,12 +181,16 @@ namespace MainCode_Group1
                         int usercount = (int)checkusercommand.ExecuteScalar();
                         if (usercount > 0)
                         {
-                            MessageBox.Show("Welcome back " + Username.Text);
+                            MessageBox.Show("Welcome " + Username.Text, "Hi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Form3 f3 = new Form3();
+                            f3.StartPosition = FormStartPosition.CenterScreen;
+                            f3.FormClosed += (s, args) => this.Close();
+                            f3.Show();
                             return;
-                        }
+                        }       
                         else
                         {
-                            MessageBox.Show("Incorrect Username or Password ");
+                            MessageBox.Show("Incorrect Username or Password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
 
